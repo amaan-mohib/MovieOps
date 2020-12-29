@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {
   Image,
+  ImageBackground,
   Keyboard,
   Linking,
   SafeAreaView,
@@ -27,7 +28,7 @@ const API = 'https://www.omdbapi.com/?s=';
 const API_ImDb = 'https://www.omdbapi.com/?i=';
 const KEY = 'f365ed0';
 
-const MoviesRoute = () => {
+const MoviesRoute = ({route, navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState([]);
   const [title, setTitle] = useState({
@@ -68,7 +69,7 @@ const MoviesRoute = () => {
   // }, []);
 
   const searchFilm = (query) => {
-    fetch(`${API}"${query}"&apikey=${KEY}`)
+    fetch(`${API}${query}&apikey=${KEY}`)
       .then((res) => res.json())
       .then((sResults) => {
         if (sResults.Response === 'True') {
@@ -229,12 +230,24 @@ const MoviesRoute = () => {
         <Surface style={{borderRadius: 4, elevation: 4}}>
           <View style={styles.card}>
             <View style={{flexDirection: 'row'}}>
-              <Image
-                style={styles.img}
+              <ImageBackground
+                blurRadius={8}
                 source={{
                   uri: `${title.Poster}`,
                 }}
-              />
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderTopLeftRadius: 4,
+                  overflow: 'hidden',
+                }}>
+                <Image
+                  style={styles.img}
+                  source={{
+                    uri: `${title.Poster}`,
+                  }}
+                />
+              </ImageBackground>
               <View style={styles.cardContent}>
                 <Title
                   style={{
@@ -259,6 +272,23 @@ const MoviesRoute = () => {
                       shareLink(title.Title);
                     }}>
                     Share
+                  </Button>
+                </View>
+                <View style={{display: 'flex', flexDirection: 'row'}}>
+                  <Button
+                    style={{marginTop: 10}}
+                    labelStyle={{color: 'white'}}
+                    icon="instagram"
+                    mode="outlined"
+                    onPress={() => {
+                      navigation.navigate('Story', {
+                        img: title.Poster,
+                        title: title.Title,
+                        artist: '',
+                        link: `https://www.imdb.com/title/${imdbID}/`,
+                      });
+                    }}>
+                    Stories
                   </Button>
                 </View>
               </View>

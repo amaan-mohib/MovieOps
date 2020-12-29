@@ -57,6 +57,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
   },
+  posterShare: {
+    width: 250,
+    height: 370,
+    resizeMode: 'contain',
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 1,
+    shadowRadius: 2,
+  },
   rating: {
     flex: 1,
     justifyContent: 'center',

@@ -112,10 +112,11 @@ export default function Story(props) {
     }
   };
   useEffect(() => {
-    setUrl(props.route.params.img);
+    setUrl(props.route.params.img.replace('SX300.jpg', 'SX600.jpg'));
     setTitle(props.route.params.title);
     setArtist(props.route.params.artist);
     setLink(props.route.params.link);
+    console.log(props.route.params.link);
     getColorFromURL(props.route.params.img).then((colors) => {
       setTopColor(colors.secondary);
       setBottomColor(colors.primary);
@@ -127,7 +128,10 @@ export default function Story(props) {
         <LinearGradient
           style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
           colors={[topColor, bottomColor, '#000000']}>
-          <Image style={styles.artShare} source={{uri: url}} />
+          <Image
+            style={link.includes('imdb') ? styles.posterShare : styles.artShare}
+            source={{uri: url}}
+          />
           <Title style={{fontWeight: 'bold'}}>{title}</Title>
           <Paragraph>{artist}</Paragraph>
         </LinearGradient>
